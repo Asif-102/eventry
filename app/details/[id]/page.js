@@ -2,7 +2,7 @@ import EventDetails from "@/components/details/EventDetails";
 import EventVenue from "@/components/details/EventVenue";
 import HeroSection from "@/components/details/HeroSection";
 
-export default function Page() {
+export default function DetailsIDPage() {
   return (
     <>
       <HeroSection />
