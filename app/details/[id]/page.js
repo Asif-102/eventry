@@ -1,7 +1,7 @@
 import EventDetails from "@/components/details/EventDetails";
 import EventVenue from "@/components/details/EventVenue";
 import HeroSection from "@/components/details/HeroSection";
-import { getEventById } from "@/db/events-queries";
+import { getEventById } from "@/db/event-queries";
 
 export default async function EventDetailsPage({ params: { id } }) {
   const eventInfo = await getEventById(id);
