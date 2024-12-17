@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import localFont from "next/font/local";
 import "./globals.css";
+import AuthProvider from "./providers/AuthProvider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -24,8 +25,10 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Navbar />
-        <main className="py-8">{children}</main>
+        <AuthProvider>
+          <Navbar />
+          <main className="py-8">{children}</main>
+        </AuthProvider>
       </body>
     </html>
   );

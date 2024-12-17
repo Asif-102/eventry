@@ -1,5 +1,6 @@
 import dbConnect from "@/dbConnect/connectMongo";
 import { userModel } from "@/models/user-models";
+import { replaceMongoIdInObject } from "@/utils/data-util";
 
 const createUser = async (user) => {
   try {
@@ -16,7 +17,10 @@ const findUserByCredentials = async (credentials) => {
     await dbConnect();
 
     const user = await userModel.findOne(credentials).lean();
-    return user;
+    if (user) {
+      return replaceMongoIdInObject(user);
+    }
+    return null;
   } catch (err) {
     console.log(err);
   }

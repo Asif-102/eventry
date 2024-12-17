@@ -1,6 +1,6 @@
 "use server";
 
-import { createUser, findUserByCredentials } from "@/db/users-queries";
+import { createUser, findUserByCredentials } from "@/db/user-queries";
 import { redirect } from "next/navigation";
 
 async function registerUser(formData) {
@@ -12,16 +12,15 @@ async function registerUser(formData) {
 }
 
 async function performLogin(formData) {
-  const credential = {};
-  credential.email = formData.get("email");
-  credential.password = formData.get("password");
+  try {
+    const credential = {};
+    credential.email = formData.get("email");
+    credential.password = formData.get("password");
 
-  const found = await findUserByCredentials(credential);
-
-  if (found) {
-    redirect("/");
-  } else {
-    throw new Error(`User with email '${formData.get("email")}' not found :(`);
+    const found = await findUserByCredentials(credential);
+    return found;
+  } catch (err) {
+    throw err;
   }
 }
 
