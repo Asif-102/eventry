@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 
 export default function SignInOut() {
   const { auth, setAuth } = useAuth();
-  console.log("🚀 ~ SignInOut ~ auth:", auth);
+
   const router = useRouter();
 
   const logout = () => {
