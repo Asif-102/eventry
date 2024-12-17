@@ -1,4 +1,4 @@
-import { getAllEvents } from "@/actions/events";
+import { getAllEvents } from "@/db/events-queries";
 import EventCard from "./EventCard";
 
 export default async function EventList() {

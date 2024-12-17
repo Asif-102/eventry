@@ -1,6 +1,6 @@
 "use server";
 
-import { createUser } from "@/actions/users";
+import { createUser } from "@/db/users-queries";
 import { redirect } from "next/navigation";
 
 async function registerUser(formData) {
