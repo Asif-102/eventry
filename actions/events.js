@@ -1,8 +1,11 @@
 import dbConnect from "@/dbConnect/connectMongo";
 import { eventModel } from "@/models/event-models";
-import { replaceMongoIdInArray } from "@/utils/data-util";
+import {
+  replaceMongoIdInArray,
+  replaceMongoIdInObject,
+} from "@/utils/data-util";
 
-export const getAllEvents = async () => {
+const getAllEvents = async () => {
   try {
     await dbConnect();
 
@@ -13,3 +16,17 @@ export const getAllEvents = async () => {
     console.log(err);
   }
 };
+
+const getEventById = async (eventId) => {
+  try {
+    await dbConnect();
+
+    const event = await eventModel.findById(eventId).lean();
+
+    return replaceMongoIdInObject(event);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export { getAllEvents, getEventById };
