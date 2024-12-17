@@ -11,4 +11,15 @@ const createUser = async (user) => {
   }
 };
 
-export { createUser };
+const findUserByCredentials = async (credentials) => {
+  try {
+    await dbConnect();
+
+    const user = await userModel.findOne(credentials).lean();
+    return user;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export { createUser, findUserByCredentials };

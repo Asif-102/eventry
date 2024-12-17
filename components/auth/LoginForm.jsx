@@ -1,8 +1,27 @@
+"use client";
+
+import { performLogin } from "@/app/actions";
+import { useState } from "react";
+
 export default function LoginForm() {
+  const [error, setError] = useState("");
+
+  const onSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const formData = new FormData(event.currentTarget);
+
+      await performLogin(formData);
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
   return (
     <>
-      {/* <div className="my-2 text-red-500">{error}</div> */}
-      <form className="login-form">
+      <div className="my-2 text-red-500">{error}</div>
+      <form className="login-form" onSubmit={onSubmit}>
         <div>
           <label htmlFor="email">Email Address</label>
           <input type="email" name="email" id="email" />
