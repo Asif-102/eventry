@@ -1,6 +1,6 @@
 "use server";
 
-import { updateInterest } from "@/db/queries";
+import { updateInterest } from "@/db/event-queries";
 import { createUser, findUserByCredentials } from "@/db/user-queries";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";

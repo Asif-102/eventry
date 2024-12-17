@@ -4,6 +4,7 @@ import {
   replaceMongoIdInArray,
   replaceMongoIdInObject,
 } from "@/utils/data-util";
+import { mongoose } from "mongoose";
 
 const getAllEvents = async () => {
   try {
@@ -29,4 +30,28 @@ const getEventById = async (eventId) => {
   }
 };
 
-export { getAllEvents, getEventById };
+const updateInterest = async (eventId, authId) => {
+  try {
+    await dbConnect();
+
+    const event = await eventModel.findById(eventId);
+
+    if (event) {
+      const foundUsers = event.interested_ids.find(
+        (id) => id.toString() === authId
+      );
+
+      if (foundUsers) {
+        event.interested_ids.pull(new mongoose.Types.ObjectId(authId));
+      } else {
+        event.interested_ids.push(new mongoose.Types.ObjectId(authId));
+      }
+
+      event.save();
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export { getAllEvents, getEventById, updateInterest };

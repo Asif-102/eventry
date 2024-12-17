@@ -25,7 +25,7 @@ export default function EventCard({ event }) {
         </div>
         <ActionButtons
           eventId={event?.id}
-          interestedUserIds={event?.interested_ids}
+          interestedUserIds={JSON.parse(JSON.stringify(event?.interested_ids))}
         />
       </div>
     </div>

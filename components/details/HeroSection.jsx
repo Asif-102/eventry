@@ -27,7 +27,9 @@ export default function HeroSection({ eventInfo }) {
 
         <ActionButtons
           eventId={eventInfo?.id}
-          interestedUserIds={eventInfo?.interested_ids}
+          interestedUserIds={JSON.parse(
+            JSON.stringify(eventInfo?.interested_ids)
+          )}
           fromDetails={true}
         />
       </div>
