@@ -30,6 +30,7 @@ export default function HeroSection({ eventInfo }) {
           interestedUserIds={JSON.parse(
             JSON.stringify(eventInfo?.interested_ids)
           )}
+          goingUserIds={JSON.parse(JSON.stringify(eventInfo?.going_ids))}
           fromDetails={true}
         />
       </div>

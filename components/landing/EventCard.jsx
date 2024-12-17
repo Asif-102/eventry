@@ -26,6 +26,7 @@ export default function EventCard({ event }) {
         <ActionButtons
           eventId={event?.id}
           interestedUserIds={JSON.parse(JSON.stringify(event?.interested_ids))}
+          goingUserIds={JSON.parse(JSON.stringify(event?.going_ids))}
         />
       </div>
     </div>

@@ -8,13 +8,18 @@ import { useState, useTransition } from "react";
 export default function ActionButtons({
   eventId,
   interestedUserIds,
+  goingUserIds,
   fromDetails,
 }) {
   const { auth } = useAuth();
   const router = useRouter();
 
-  const isInterested = interestedUserIds.find((id) => id === auth?.id);
+  const isInterested = interestedUserIds?.find((id) => id === auth?.id);
+  const isGoing = goingUserIds?.find((id) => id === auth?.id);
+
   const [interested, setInterested] = useState(isInterested);
+  const [going, setGoint] = useState(isGoing);
+
   const [isPending, startTransition] = useTransition();
 
   const toggleInterest = async () => {
@@ -28,7 +33,7 @@ export default function ActionButtons({
 
   const markGoing = () => {
     if (auth) {
-      router.push("/payment");
+      router.push(`/payment/${eventId}`);
     } else {
       router.push("/login");
     }
@@ -49,6 +54,7 @@ export default function ActionButtons({
         Interested
       </button>
       <button
+        disabled={auth && going}
         onClick={markGoing}
         className=" text-center w-full bg-[#464849] py-2 px-2 rounded-md border border-[#5F5F5F]/50 shadow-sm cursor-pointer hover:bg-[#3C3D3D] transition-colors active:translate-y-1"
       >
