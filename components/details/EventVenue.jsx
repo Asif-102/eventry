@@ -1,16 +1,52 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
 export default function EventVenue({ location }) {
+  const [mapUrl, setMapUrl] = useState("");
+
+  const fetchCoordinates = async (location) => {
+    try {
+      const response = await fetch(
+        `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(
+          location
+        )}&format=json`
+      );
+      const data = await response.json();
+      if (data && data.length > 0) {
+        const { lat, lon } = data[0];
+        const url = `https://www.openstreetmap.org/export/embed.html?bbox=${lon}%2C${lat}%2C${lon}%2C${lat}&layer=mapnik&marker=${lat}%2C${lon}`;
+        setMapUrl(url);
+      } else {
+        console.error("No coordinates found for location:", location);
+      }
+    } catch (error) {
+      console.error("Error fetching coordinates:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (location) {
+      fetchCoordinates(location);
+    }
+  }, [location]);
+
   return (
     <div className="overflow-hidden rounded-lg col-span-2 bg-[#242526]">
       <div className="w-full">
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d9563.048507081372!2d89.4311410274292!3d25.90038347256725!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sbd!4v1711180232846!5m2!1sen!2sbd"
-          width="600"
-          height="450"
-          style={{ border: "0" }}
-          allowFullScreen=""
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-        ></iframe>
+        {mapUrl ? (
+          <iframe
+            src={mapUrl}
+            width="600"
+            height="450"
+            style={{ border: "0" }}
+            allowFullScreen=""
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          ></iframe>
+        ) : (
+          <p className="text-center text-[#9C9C9C]">Loading map...</p>
+        )}
       </div>
       <div className="p-4">
         <p className="text-[#9C9C9C] text-base mt-1">{location}</p>
